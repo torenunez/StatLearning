@@ -9,9 +9,9 @@ glm.fit=glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
 summary(glm.fit)
 glm.probs=predict(glm.fit,type="response") 
 glm.probs[1:5]
-glm.pred=ifelse(glm.probs>0.5,"Up","Down")
+glm.pred=ifelse(glm.probs>0.5,"Up","Down")##using the classification
 attach(Smarket)
-table(glm.pred,Direction)
+table(glm.pred,Direction)##attached Smarket allows Direction
 mean(glm.pred==Direction)
 # Make training and test set
 train = Year<2005
@@ -50,8 +50,12 @@ mean(lda.pred$class==Smarket.2005$Direction)
 library(class)
 ?knn
 attach(Smarket)
+
+ls()
+objects(2)
+
 Xlag=cbind(Lag1,Lag2)
 train=Year<2005
-knn.pred=knn(Xlag[train,],Xlag[!train,],Direction[train],k=1)
+knn.pred=knn(Xlag[train,],Xlag[!train,],Direction[train],k=2)
 table(knn.pred,Direction[!train])
 mean(knn.pred==Direction[!train])
